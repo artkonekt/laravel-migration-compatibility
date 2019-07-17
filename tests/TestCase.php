@@ -1,0 +1,73 @@
+<?php
+/**
+ * Contains the TestCase class.
+ *
+ * @copyright   Copyright (c) 2019 Attila Fulop
+ * @author      Attila Fulop
+ * @license     MIT
+ * @since       2019-07-17
+ *
+ */
+
+namespace Konekt\LaravelMigrationCompatibility\Tests;
+
+use Konekt\LaravelMigrationCompatibility\LaravelMigrationCompatibilityProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
+
+abstract class TestCase extends Orchestra
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUpDatabase($this->app);
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            LaravelMigrationCompatibilityProvider::class
+        ];
+    }
+
+    /**
+     * Set up the environment.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        $engine = env('TEST_DB_ENGINE', 'sqlite');
+
+        $app['config']->set('database.default', $engine);
+        $app['config']->set('database.connections.' . $engine, [
+            'driver'   => $engine,
+            'database' => 'sqlite' == $engine ? ':memory:' : 'user_test',
+            'prefix'   => '',
+            'host'     => '127.0.0.1',
+            'username' => env('TEST_DB_USERNAME', 'root'),
+            'password' => env('TEST_DB_PASSWORD', ''),
+        ]);
+
+        if ('pgsql' === $engine) {
+            $app['config']->set("database.connections.{$engine}.charset", 'utf8');
+        }
+    }
+
+    /**
+     * Set up the database.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function setUpDatabase($app)
+    {
+        $this->artisan('migrate:reset');
+        $this->loadLaravelMigrations();
+        $this->artisan('migrate', ['--force' => true]);
+    }
+}
