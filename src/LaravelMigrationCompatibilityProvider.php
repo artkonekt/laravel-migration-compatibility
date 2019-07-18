@@ -11,8 +11,15 @@
 
 namespace Konekt\LaravelMigrationCompatibility;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelMigrationCompatibilityProvider extends ServiceProvider
 {
+    public function boot()
+    {
+        Blueprint::macro('intOrBigInt', function(...$args) {
+            return $this->bigInteger(...$args);
+        });
+    }
 }

@@ -13,14 +13,18 @@ namespace Konekt\LaravelMigrationCompatibility\Tests;
 
 use Konekt\LaravelMigrationCompatibility\LaravelMigrationCompatibilityProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use PDO;
 
 abstract class TestCase extends Orchestra
 {
+    /** @var PDO */
+    protected $pdo;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setUpDatabase($this->app);
+        $this->pdo = $this->app->get('db')->connection()->getPdo();
     }
 
     /**
@@ -59,15 +63,14 @@ abstract class TestCase extends Orchestra
         }
     }
 
-    /**
-     * Set up the database.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function setUpDatabase($app)
+    protected function tableExists(string $table): bool
     {
-        $this->artisan('migrate:reset');
-        $this->loadLaravelMigrations();
-        $this->artisan('migrate', ['--force' => true]);
+        try {
+            $result = $this->pdo->query("SELECT 1 FROM $table LIMIT 1");
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return $result !== false;
     }
 }
