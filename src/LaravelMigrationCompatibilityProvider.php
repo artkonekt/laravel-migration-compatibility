@@ -12,14 +12,21 @@
 namespace Konekt\LaravelMigrationCompatibility;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelMigrationCompatibilityProvider extends ServiceProvider
 {
     public function boot()
     {
-        Blueprint::macro('intOrBigInt', function(...$args) {
-            return $this->bigInteger(...$args);
+        Blueprint::macro('intOrBigIntBasedOnRelated', function(string $column, Builder $builder, string $basedOn, bool $autoIncrement = false, bool $unsigned = false) {
+            $related = explode('.', $basedOn);
+            $type = ColumnTypeDetector::getType($builder->getConnection()->getPdo(), $related[0], $related[1]);
+            if ('integer' === $type) {
+                return $this->integer($column, $autoIncrement, $unsigned);
+            } else {
+                return $this->bigInteger($column, $autoIncrement, $unsigned);
+            }
         });
     }
 }

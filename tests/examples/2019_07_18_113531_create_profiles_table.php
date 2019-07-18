@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProfilesTable extends Migration
 {
@@ -9,7 +10,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->intOrBigInt('user_id');//->detectFrom('user', 'id');
+            $table->intOrBigIntBasedOnRelated('user_id', Schema::connection(null), 'users.id');
             $table->string('some_field')->nullable();
             $table->timestamps();
 
