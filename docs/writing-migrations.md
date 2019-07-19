@@ -8,8 +8,8 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
 
-            // We don't know whether `user.id` is int or bigInt:
-            $table->intOrBigInt('user_id')->detectFrom('user', 'id');
+            // Make `user_id` field the same type as the `id` field of the `user` table:
+            $table->intOrBigIntBasedOnRelated('user_id', Schema::connection(null), 'users.id');
 
             //...
 
