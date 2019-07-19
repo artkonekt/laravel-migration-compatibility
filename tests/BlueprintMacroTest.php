@@ -11,10 +11,6 @@
 
 namespace Konekt\LaravelMigrationCompatibility\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\ColumnDefinition;
-use Konekt\LaravelMigrationCompatibility\Tests\Dummies\Profile;
-
 class BlueprintMacroTest extends TestCase
 {
     /** @test */
@@ -31,10 +27,10 @@ class BlueprintMacroTest extends TestCase
         $this->pdo->query('insert into users (name, email, password) values ("asd", "qwe", "zxc")');
         $this->pdo->query("insert into profiles (user_id) values ({$this->pdo->lastInsertId()})");
 
-        $select = $this->pdo->query('SELECT * from users limit 1');
+        $select     = $this->pdo->query('SELECT * from users limit 1');
         $userIdMeta = $select->getColumnMeta(0);
 
-        $select = $this->pdo->query('SELECT * from profiles limit 1');
+        $select            = $this->pdo->query('SELECT * from profiles limit 1');
         $profileUserIdMeta = $select->getColumnMeta(1);
 
         $this->assertEquals('id', $userIdMeta['name']);

@@ -71,6 +71,6 @@ abstract class TestCase extends Orchestra
             return false;
         }
 
-        return $result !== false;
+        return false !== $result;
     }
 }

@@ -9,14 +9,14 @@ class ColumnTypeDetector
     /** @var PDO */
     private $pdo;
 
-    public static function getType(PDO $pdo, string $table, string $column)
-    {
-        return (new self($pdo))->getColumnType($table, $column);
-    }
-
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+    }
+
+    public static function getType(PDO $pdo, string $table, string $column)
+    {
+        return (new self($pdo))->getColumnType($table, $column);
     }
 
     public function getColumnType(string $table, string $column)
@@ -27,7 +27,7 @@ class ColumnTypeDetector
 
         $columns = [];
         foreach (range(0, $statement->columnCount() - 1) as $index) {
-            $meta = $statement->getColumnMeta($index);
+            $meta                   = $statement->getColumnMeta($index);
             $columns[$meta['name']] = $meta;
         }
 
