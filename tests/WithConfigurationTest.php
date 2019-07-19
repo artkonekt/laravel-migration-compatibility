@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the BlueprintMacroTest class.
+ * Contains the WithConfigurationTest class.
  *
  * @copyright   Copyright (c) 2019 Attila Fulop
  * @author      Attila Fulop
@@ -11,7 +11,7 @@
 
 namespace Konekt\LaravelMigrationCompatibility\Tests;
 
-class BlueprintMacroTest extends TestCase
+class WithConfigurationTest extends TestCase
 {
     /** @test */
     public function can_obtain_the_field_type_from_a_foreign_table_field()

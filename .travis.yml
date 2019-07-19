@@ -1,12 +1,32 @@
 language: php
-
-php:
-  - 7.1
-  - 7.2
-  - 7.3
-
-before_script:
-  - composer install --no-interaction
-
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+matrix:
+  include:
+    - php: 7.1
+      env: L5_VER=4 TEST_DB_ENGINE=mysql
+    - php: 7.1
+      env: L5_VER=4 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
+    - php: 7.3
+      env: L5_VER=7 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
+    - php: 7.3
+      env: L5_VER=8 TEST_DB_ENGINE=mysql
+    - php: 7.3
+      env: L5_VER=8 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
 script:
-  - vendor/bin/phpunit tests/
+  - vendor/bin/phpunit --testdox
+before_install:
+  - composer require "illuminate/support:5.${L5_VER}.*" --no-update -v
+  - composer require "illuminate/console:5.${L5_VER}.*" --no-update -v
+  - composer require "orchestra/testbench:3.${L5_VER}.*" --no-update -v
+  - sh -c "[ ! -z $TEST_DB_ENGINE ] && [ 'mysql' = $TEST_DB_ENGINE ] && mysql -e 'DROP DATABASE IF EXISTS user_test;CREATE DATABASE user_test;'" || true
+  - sh -c "[ ! -z $TEST_DB_ENGINE ] && [ 'pgsql' = $TEST_DB_ENGINE ] && psql -c 'create database user_test;' -U postgres" || true
+install: composer install --no-interaction
+services:
+  - mysql
+  - postgresql
+notifications:
+  email: false
+  slack:
+    secure: "ffc5qcn9X/K/bXR3xdw50Vxm8IzEMaV0xt/VLgcrLg18syOwdKHks7zKxtzxej9QQKRxPT26A4sLr4UOv6tB145Ek357jX/chdb34J1jokW0YAjdJDpwh5w/PrhLLoOwPV/Ppem+/AiQmMXgOILb2F/JiR3LIfoKy2DGIb9jWxxCudwjO4yMixHGDC0SPQ5NOtUXFkc47Qd0/0DZNBvsdaYoj82XHANQPwS/F8oT1uX3gGzHA1C94n0xSLNVk0UeA7nieWrkrE9EKtyYHA5reI1q6YmM1MAl2lYHqQhu4PDTHzVA/xS0YwvEpmIK3FH3Nd/kOzaDRkpTziQnHHYyqxx3tssCgAR8cxWEfuyjiyRPhlWsC3YCZL5gPPWX83sjznWgLKPXO0XMPtW1W+iFB953c+VuvaEIKoxAH/NL5yuJVllQXMsDsgZLNqAt//7ENm692NtvcVk0ksPyjYP4+rmszy1k1/B8l8uRHg9ceNuHdaASXFokd6y6l2riWqhNtfClv+/SwjxP5nFGAlDFKrH1PSfr5kDTnM0XuVfn87ILQFpIEX7WFifOGP3NraFLAMKfscA8nBd4cv/qHz28fs3FH17IRF0rnMMpab17S9fzUsM1Vi6XDXzbvSGFNEOJdr2kvTIKOMu4dewBUH2kHxXB7qb9WRoP/3Z1fkPkq68="
