@@ -16,6 +16,7 @@ class BlueprintMacroTest extends TestCase
     /** @test */
     public function can_obtain_the_field_type_from_a_foreign_table_field()
     {
+        $this->app['config']->set("migration.compatibility.map.users.id", 'integer');
         $this->loadMigrationsFrom(__DIR__ . '/examples');
         $this->artisan('migrate:reset');
         $this->loadLaravelMigrations();
