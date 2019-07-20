@@ -23,7 +23,7 @@ class ObtainFromDatabaseTest extends TestCase
         $this->assertTrue($this->tableExists('users'));
         $this->assertTrue($this->tableExists('profiles'));
 
-        $this->pdo->query('insert into users (name, email, password) values ("asd", "qwe", "zxc")');
+        $this->pdo->query("insert into users (name, email, password) values ('asd', 'qwe', 'zxc')");
         $this->pdo->query("insert into profiles (user_id) values ({$this->pdo->lastInsertId()})");
 
         $select     = $this->pdo->query('SELECT * from users limit 1');

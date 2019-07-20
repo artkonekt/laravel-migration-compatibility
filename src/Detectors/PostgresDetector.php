@@ -26,6 +26,23 @@ class PostgresDetector implements FieldTypeDetector
 
     public function run(string $table, string $column): IntegerField
     {
+        $colDef = $this->getColumnMeta($table, $column);
+
+        if ('bigint' === $colDef['data_type']) {
+            return IntegerField::BIGINT();
+        } elseif ('integer' === $colDef['data_type']) {
+            return IntegerField::INTEGER();
+        }
+
         return IntegerField::UNKNOWN();
+    }
+
+    private function getColumnMeta(string $table, string $column): ?array
+    {
+        $sql = 'SELECT * FROM information_schema.columns WHERE table_name = '.
+            "'$table' AND column_name = '$column'";
+        $meta = collect($this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC))->keyBy('column_name');
+
+        return $meta->get($column);
     }
 }
