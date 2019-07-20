@@ -11,8 +11,6 @@
 
 namespace Konekt\LaravelMigrationCompatibility\Tests;
 
-use Illuminate\Support\Facades\App;
-
 class WithConfigurationTest extends TestCase
 {
     /** @test */
