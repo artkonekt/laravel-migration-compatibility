@@ -4,6 +4,7 @@ namespace Konekt\LaravelMigrationCompatibility;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Konekt\LaravelMigrationCompatibility\Factories\DatabaseDetector;
 use PDO;
 
 class ColumnTypeDetector
@@ -25,13 +26,10 @@ class ColumnTypeDetector
 
     public function getColumnType(string $table, string $column): IntegerField
     {
-        $driver = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-        $method = 'get' . ucfirst(strtolower($driver)) . 'Type';
-        $result = null;
-
         // Attempt to obtain from database
-        if (method_exists($this, $method)) {
-            $result = $this->{$method}($table, $column);
+        $dbDetector = DatabaseDetector::fromPdoDriver($this->pdo);
+        if ($dbDetector) {
+            $result = $dbDetector->run($table, $column);
             if (!$result->isUnknown()) {
                 return $result;
             }
@@ -82,52 +80,5 @@ class ColumnTypeDetector
         }
 
         return IntegerField::INTEGER()->unsigned();
-    }
-
-    private function getMysqlType(string $table, string $column): IntegerField
-    {
-        $tables = $this->pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_ASSOC);
-        $tables = collect($tables)->mapWithKeys(function (array $item) {
-            $value = array_values($item)[0];
-            return [$value => true];
-        });
-
-        if (!$tables->has($table)) {
-            return IntegerField::UNKNOWN();
-        }
-
-        $statement = $this->pdo->query(sprintf('DESCRIBE `%s`', $table));
-        $meta = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('Field');
-        $colDef = $meta->get($column);
-        $nativeType = strtolower($colDef['Type']);
-
-        if (Str::startsWith($nativeType, 'bigint')) {
-            $result = IntegerField::BIGINT();
-        } elseif (Str::startsWith($nativeType, 'int')) {
-            $result = IntegerField::INTEGER();
-        } else {
-            return IntegerField::UNKNOWN();
-        }
-
-        $result->unsigned(Str::contains($nativeType, 'unsigned'));
-
-        return $result;
-    }
-
-    private function getPgsqlType(string $table, string $column): IntegerField
-    {
-
-    }
-
-    private function getSqliteType(string $table, string $column): IntegerField
-    {
-        $statement = $this->pdo->query(
-            sprintf('PRAGMA table_info(%s);', $this->pdo->quote($table))
-        );
-
-        $meta = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('name');
-        $colDef = $meta->get($column);
-
-        return IntegerField::create($colDef['type'] ?? null);
     }
 }
