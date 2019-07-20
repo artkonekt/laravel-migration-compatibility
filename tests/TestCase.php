@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->pdo = $this->app->get('db')->connection()->getPdo();
+        $this->pdo = $this->app->make('db')->connection()->getPdo();
     }
 
     /**
