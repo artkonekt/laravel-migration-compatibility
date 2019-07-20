@@ -1,22 +1,21 @@
 <?php
 /**
- * Contains the WithConfigurationTest class.
+ * Contains the ObtainFromDatabaseTest class.
  *
  * @copyright   Copyright (c) 2019 Attila Fulop
  * @author      Attila Fulop
  * @license     MIT
- * @since       2019-07-18
+ * @since       2019-07-19
  *
  */
 
 namespace Konekt\LaravelMigrationCompatibility\Tests;
 
-class WithConfigurationTest extends TestCase
+class ObtainFromDatabaseTest extends TestCase
 {
     /** @test */
-    public function can_obtain_the_field_type_from_a_foreign_table_field()
+    public function obtains_field_type_from_db_when_table_was_already_present_before_migration_execution()
     {
-        $this->app['config']->set("migration.compatibility.map.users.id", 'unsigned bigint');
         $this->artisan('migrate:reset');
         $this->loadLaravelMigrations();
         $this->loadMigrationsFrom(__DIR__ . '/examples');
@@ -38,4 +37,5 @@ class WithConfigurationTest extends TestCase
 
         $this->assertEquals($userIdMeta['native_type'], $profileUserIdMeta['native_type']);
     }
+
 }

@@ -14,6 +14,7 @@ namespace Konekt\LaravelMigrationCompatibility;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
+use LogicException;
 
 class LaravelMigrationCompatibilityProvider extends ServiceProvider
 {
@@ -22,11 +23,16 @@ class LaravelMigrationCompatibilityProvider extends ServiceProvider
         Blueprint::macro('intOrBigIntBasedOnRelated', function (string $column, Builder $builder, string $basedOn, bool $autoIncrement = false, bool $unsigned = false) {
             $related = explode('.', $basedOn);
             $type = ColumnTypeDetector::getType($builder->getConnection()->getPdo(), $related[0], $related[1]);
-            if ('integer' === $type) {
-                return $this->integer($column, $autoIncrement, $unsigned);
+
+            if ($type->isInteger()) {
+                return $this->integer($column, false, $type->isUnsigned());
             }
 
-            return $this->bigInteger($column, $autoIncrement, $unsigned);
+            if ($type->isBigint()) {
+                return $this->bigInteger($column, false, $type->isUnsigned());
+            }
+
+            throw new LogicException("Could not determine field type for `$column`");
         });
     }
 }
