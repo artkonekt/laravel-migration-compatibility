@@ -38,9 +38,11 @@ abstract class TestCase extends Orchestra
             LaravelMigrationCompatibilityProvider::class
         ];
 
-        if (version_compare($this->app->version(), '5.5.0', '<')) {
+        if (version_compare($app->version(), '5.5.0', '<')) {
             $providers[] = \Orchestra\Database\ConsoleServiceProvider::class;
         }
+
+        return $providers;
     }
 
     /**
