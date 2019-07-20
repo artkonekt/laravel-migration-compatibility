@@ -8,6 +8,12 @@ matrix:
       env: L5_VER=4 TEST_DB_ENGINE=mysql
     - php: 7.1
       env: L5_VER=4 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
+    - php: 7.2
+      env: L5_VER=5 TEST_DB_ENGINE=mysql
+    - php: 7.2
+      env: L5_VER=5 TEST_DB_ENGINE=sqlite
+    - php: 7.2
+      env: L5_VER=5 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
     - php: 7.3
       env: L5_VER=7 TEST_DB_ENGINE=pgsql TEST_DB_USERNAME=postgres
     - php: 7.3
