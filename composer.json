@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~7.5 | ~8.0",
-        "orchestra/testbench": "^3.4.2"
+        "orchestra/testbench": "^3.4.2",
+        "orchestra/database": "~3.4"
     },
     "autoload": {
         "psr-4": { "Konekt\\LaravelMigrationCompatibility\\": "src/" }
