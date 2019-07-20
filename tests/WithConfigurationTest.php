@@ -11,12 +11,14 @@
 
 namespace Konekt\LaravelMigrationCompatibility\Tests;
 
+use Illuminate\Support\Facades\App;
+
 class WithConfigurationTest extends TestCase
 {
     /** @test */
     public function can_obtain_the_field_type_from_a_foreign_table_field()
     {
-        $this->app['config']->set("migration.compatibility.map.users.id", 'unsigned bigint');
+        $this->app['config']->set("migration.compatibility.map.users.id", $this->getDefaultPlatformTypeConfig());
         $this->artisan('migrate:reset');
         $this->loadLaravelMigrations();
         $this->loadMigrationsFrom(__DIR__ . '/examples');
@@ -37,5 +39,19 @@ class WithConfigurationTest extends TestCase
         $this->assertEquals('user_id', $profileUserIdMeta['name']);
 
         $this->assertEquals($userIdMeta['native_type'], $profileUserIdMeta['native_type']);
+    }
+
+    private function isLaravel58OrHigher(): bool
+    {
+        return version_compare($this->app->version(), '5.8.0', '>=');
+    }
+
+    private function getDefaultPlatformTypeConfig(): string
+    {
+        if ($this->isLaravel58OrHigher()) {
+            return 'bigint unsigned';
+        }
+
+        return 'int unsigned';
     }
 }
