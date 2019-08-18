@@ -4,3 +4,4 @@
 
 - II. Usage
     - [Writing Migrations](writing-migrations.md)
+    - [Configuration](configuration.md)

@@ -43,6 +43,21 @@ has been modified back to using `int` for `user.id`.
 Again, the Laravel version is not sufficient to tell whether the user table's id field is `int` or
 `bigInt`.
 
+## The Solution
+
+The best solution is to detect the actual type from the database on which the migration is being
+ran. This is however not super simple since some circumstances can interfere with it.
+
+This package provides an additional, flexible pseudo field type for migration called
+`intOrBigIntBasedOnRelated()` that can be either `INT` or `BIGINT` based on the environment it is
+running in.
+
+It attempts to obtain the actual type in the following order:
+
+1. Read it from the actual database; if it can not, then
+2. Read the type from the application's configuration; if that fails as well, then
+3. Makes a guess based on the Laravel version (as a fallback).
+
 **Next**: [Installation &raquo;](installation.md)
 
 
