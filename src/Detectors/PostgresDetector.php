@@ -39,7 +39,7 @@ class PostgresDetector implements FieldTypeDetector
 
     private function getColumnMeta(string $table, string $column): ?array
     {
-        $sql = 'SELECT * FROM information_schema.columns WHERE table_name = '.
+        $sql = 'SELECT * FROM information_schema.columns WHERE table_name = ' .
             "'$table' AND column_name = '$column'";
         $meta = collect($this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC))->keyBy('column_name');
 

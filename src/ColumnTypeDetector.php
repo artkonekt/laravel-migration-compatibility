@@ -4,6 +4,8 @@ namespace Konekt\LaravelMigrationCompatibility;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Konekt\LaravelMigrationCompatibility\Detectors\ConfigurationDetector;
+use Konekt\LaravelMigrationCompatibility\Detectors\FromLaravelVersionDetector;
 use Konekt\LaravelMigrationCompatibility\Factories\DatabaseDetector;
 use PDO;
 
@@ -36,34 +38,13 @@ class ColumnTypeDetector
         }
 
         // Attempt to obtain from package configuration
-        $result = $this->detectFromConfiguration($table, $column);
+        $result = (new ConfigurationDetector(App::make('config')))->run($table, $column);
         if (!$result->isUnknown()) {
             return $result;
         }
 
         // Worst case scenario, make a guess based on Laravel version
         return $this->fallbackToGuessFromLaravelVersionNumber($table, $column);
-    }
-
-    private function detectFromConfiguration(string $table, string $column): IntegerField
-    {
-        $config = config(static::CONFIG_ROOT . ".$table.$column");
-
-        if (null === $config) {
-            return IntegerField::UNKNOWN();
-        }
-
-        $config = strtolower($config);
-
-        if (Str::contains($config, 'bigint')) {
-            $result = IntegerField::BIGINT();
-        } elseif (Str::contains($config, 'int')) {
-            $result = IntegerField::INTEGER();
-        } else {
-            return IntegerField::UNKNOWN();
-        }
-
-        return $result->unsigned(Str::contains($config, 'unsigned'));
     }
 
     private function fallbackToGuessFromLaravelVersionNumber(string $table, string $column): IntegerField
@@ -75,10 +56,6 @@ class ColumnTypeDetector
             ), E_USER_NOTICE
         );
 
-        if (version_compare(App::version(), '5.8.0', '>=')) {
-            return IntegerField::BIGINT()->unsigned();
-        }
-
-        return IntegerField::INTEGER()->unsigned();
+        return (new FromLaravelVersionDetector())->run($table, $column);
     }
 }

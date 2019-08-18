@@ -34,7 +34,7 @@ class MySqlDetector implements FieldTypeDetector
         $colDef = $this->getColumnMeta($table, $column);
         if (null === $colDef) {
             return IntegerField::UNKNOWN();
-        }$nativeType = strtolower($colDef['Type']);
+        }
 
         $nativeType = strtolower($colDef['Type']);
 
@@ -54,7 +54,7 @@ class MySqlDetector implements FieldTypeDetector
     private function getColumnMeta(string $table, string $column): ?array
     {
         $statement = $this->pdo->query(sprintf('DESCRIBE `%s`', $table));
-        $meta = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('Field');
+        $meta      = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('Field');
 
         return $meta->get($column);
     }

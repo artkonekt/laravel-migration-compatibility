@@ -30,7 +30,7 @@ class SqliteDetector implements FieldTypeDetector
             sprintf('PRAGMA table_info(%s);', $this->pdo->quote($table))
         );
 
-        $meta = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('name');
+        $meta   = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('name');
         $colDef = $meta->get($column);
 
         return IntegerField::create($colDef['type'] ?? null);

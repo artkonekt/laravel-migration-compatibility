@@ -37,5 +37,4 @@ class ObtainFromDatabaseTest extends TestCase
 
         $this->assertEquals($userIdMeta['native_type'], $profileUserIdMeta['native_type']);
     }
-
 }
