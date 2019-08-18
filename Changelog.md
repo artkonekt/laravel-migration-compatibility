@@ -1,6 +1,16 @@
 # Changelog
 #### Laravel Migration Compatibility
 
-## 1.0-dev
+## 1.0 Series
 
-- No release, still in concept phase
+### 1.0.0
+##### 2019-08-18
+
+- Very first release
+- Supports
+  - detection from mysql, postgres and sqlite databases,
+  - detection from config,
+  - guess from Laravel version (heuristic)
+- Works with:
+  - PHP 7.1 - 7.3
+  - Laravel 5.4 - 5.8
