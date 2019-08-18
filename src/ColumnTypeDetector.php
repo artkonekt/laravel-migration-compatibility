@@ -3,7 +3,6 @@
 namespace Konekt\LaravelMigrationCompatibility;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use Konekt\LaravelMigrationCompatibility\Detectors\ConfigurationDetector;
 use Konekt\LaravelMigrationCompatibility\Detectors\FromLaravelVersionDetector;
 use Konekt\LaravelMigrationCompatibility\Factories\DatabaseDetector;

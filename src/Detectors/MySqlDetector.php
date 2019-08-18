@@ -64,6 +64,7 @@ class MySqlDetector implements FieldTypeDetector
         $tables = $this->pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_ASSOC);
         $tables = collect($tables)->mapWithKeys(function (array $item) {
             $value = array_values($item)[0];
+
             return [$value => true];
         });
 

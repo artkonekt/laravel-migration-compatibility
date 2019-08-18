@@ -34,6 +34,5 @@ class FromLaravelVersionDetector implements FieldTypeDetector
 
     public function setPdo(PDO $pdo): void
     {
-        return;
     }
 }
