@@ -59,7 +59,7 @@ class ColumnTypeDetector
 
     private function notice(string $message): void
     {
-        if (App::environment('test')) {
+        if (App::environment('testing')) {
             echo "NOTICE: $message\n";
         } else {
             trigger_error($message, E_USER_NOTICE);

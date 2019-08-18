@@ -38,18 +38,4 @@ class WithConfigurationTest extends TestCase
 
         $this->assertEquals($userIdMeta['native_type'], $profileUserIdMeta['native_type']);
     }
-
-    private function isLaravel58OrHigher(): bool
-    {
-        return version_compare($this->app->version(), '5.8.0', '>=');
-    }
-
-    private function getDefaultPlatformTypeConfig(): string
-    {
-        if ($this->isLaravel58OrHigher()) {
-            return 'bigint unsigned';
-        }
-
-        return 'int unsigned';
-    }
 }

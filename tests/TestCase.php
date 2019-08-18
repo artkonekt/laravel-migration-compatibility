@@ -79,4 +79,18 @@ abstract class TestCase extends Orchestra
 
         return false !== $result;
     }
+
+    protected function isLaravel58OrHigher(): bool
+    {
+        return version_compare($this->app->version(), '5.8.0', '>=');
+    }
+
+    protected function getDefaultPlatformTypeConfig(): string
+    {
+        if ($this->isLaravel58OrHigher()) {
+            return 'bigint unsigned';
+        }
+
+        return 'int unsigned';
+    }
 }
