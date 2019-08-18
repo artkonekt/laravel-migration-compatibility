@@ -10,8 +10,6 @@ use PDO;
 
 class ColumnTypeDetector
 {
-    private const CONFIG_ROOT = 'migration.compatibility.map';
-
     /** @var PDO */
     private $pdo;
 
@@ -49,12 +47,22 @@ class ColumnTypeDetector
     private function fallbackToGuessFromLaravelVersionNumber(string $table, string $column): IntegerField
     {
         // Trigger a notice to help folks finding the right path when shit hits the fan
-        trigger_error(
+        $this->notice(
             sprintf("Could not detect type for the `%s.%s` relation.\nSet the %s config entry to either `%s` or `%s`.",
-                $table, $column, static::CONFIG_ROOT . ".$table.$column", 'int [unsigned]', 'bigint [unsigned]'
-            ), E_USER_NOTICE
+                $table, $column, ConfigurationDetector::CONFIG_ROOT . " . $table . $column",
+                'int [unsigned]', 'bigint [unsigned]'
+            )
         );
 
         return (new FromLaravelVersionDetector())->run($table, $column);
+    }
+
+    private function notice(string $message): void
+    {
+        if (App::environment('test')) {
+            echo "NOTICE: $message\n";
+        } else {
+            trigger_error($message, E_USER_NOTICE);
+        }
     }
 }

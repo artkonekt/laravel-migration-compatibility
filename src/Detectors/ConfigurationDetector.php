@@ -19,7 +19,7 @@ use PDO;
 
 class ConfigurationDetector implements FieldTypeDetector
 {
-    private const CONFIG_ROOT = 'migration.compatibility.map';
+    public const CONFIG_ROOT = 'migration.compatibility.map';
 
     /** @var Repository */
     private $config;
