@@ -1,7 +1,5 @@
 # Laravel Migration Compatibility
 
-> **DISCLAIMER!** This package is an early concept, is not yet working and it's not suitable for any use!
-
 [![Travis Build Status](https://img.shields.io/travis/artkonekt/laravel-migration-compatibility.svg?style=flat-square)](https://travis-ci.org/artkonekt/laravel-migration-compatibility)
 [![Packagist Stable Version](https://img.shields.io/packagist/v/konekt/laravel-migration-compatibility.svg?style=flat-square&label=stable)](https://packagist.org/packages/konekt/laravel-migration-compatibility)
 [![Packagist downloads](https://img.shields.io/packagist/dt/konekt/laravel-migration-compatibility.svg?style=flat-square)](https://packagist.org/packages/konekt/laravel-migration-compatibility)
@@ -17,8 +15,9 @@ increments method.
 Foreign key columns must be of the same type. Therefore, a column created using the increments
 method can not reference a column created using the bigIncrements method.
 
-This small change is a big [source of problems](https://laraveldaily.com/be-careful-laravel-5-8-added-bigincrements-as-defaults/)
-for packages that define references to the default Laravel user table.
+This small change is a big
+[source of problems](https://laraveldaily.com/be-careful-laravel-5-8-added-bigincrements-as-defaults/)
+for **packages** that define references to the **default Laravel user table**.
 
 This package helps solving this problem by extending Laravel's `Blueprint` class by a method that
 can detect the actual referenced field type:
