@@ -3,6 +3,11 @@
 
 ## 1.0 Series
 
+### 1.0.1
+##### 2019-08-25
+
+- Fixed the missing Laravel auto package discovery entry in composer.json
+
 ### 1.0.0
 ##### 2019-08-18
 
