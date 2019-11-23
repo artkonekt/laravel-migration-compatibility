@@ -1,7 +1,12 @@
 # Changelog
 #### Laravel Migration Compatibility
 
-## 1.0 Series
+## 1.x Series
+
+### 1.1.0
+
+- Added Laravel 6 support
+- Removed Laravel 5.4 support
 
 ### 1.0.1
 ##### 2019-08-25
