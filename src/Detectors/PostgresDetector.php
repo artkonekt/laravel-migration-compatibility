@@ -28,6 +28,10 @@ class PostgresDetector implements FieldTypeDetector
     {
         $colDef = $this->getColumnMeta($table, $column);
 
+        if (!is_array($colDef)) {
+            return IntegerField::UNKNOWN();
+        }
+
         if ('bigint' === $colDef['data_type']) {
             return IntegerField::BIGINT();
         } elseif ('integer' === $colDef['data_type']) {
