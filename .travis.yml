@@ -55,6 +55,8 @@ matrix:
     - php: '7.2'
       env: 'LARAVEL=8.1 TEST_DB_ENGINE=pgsql'
 
+before_script:
+  - echo 'memory_limit=-1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 script:
   - vendor/bin/phpunit --testdox
 before_install:
