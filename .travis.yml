@@ -4,65 +4,59 @@ cache:
     - "$HOME/.composer/cache"
 
 php:
-  - '7.2'
   - '7.3'
   - '7.4'
+  - '8.0'
 
 env:
-  - LARAVEL=5.5 TEST_DB_ENGINE=sqlite
-  - LARAVEL=5.5 TEST_DB_ENGINE=mysql
-  - LARAVEL=5.5 TEST_DB_ENGINE=pgsql
-  - LARAVEL=5.6 TEST_DB_ENGINE=sqlite
-  - LARAVEL=5.6 TEST_DB_ENGINE=mysql
-  - LARAVEL=5.6 TEST_DB_ENGINE=pgsql
-  - LARAVEL=5.7 TEST_DB_ENGINE=sqlite
-  - LARAVEL=5.7 TEST_DB_ENGINE=pgsql
-  - LARAVEL=5.7 TEST_DB_ENGINE=mysql
-  - LARAVEL=5.8 TEST_DB_ENGINE=sqlite
-  - LARAVEL=5.8 TEST_DB_ENGINE=mysql
-  - LARAVEL=5.8 TEST_DB_ENGINE=pgsql
   - LARAVEL=6.0 TEST_DB_ENGINE=sqlite
   - LARAVEL=6.0 TEST_DB_ENGINE=mysql
   - LARAVEL=6.0 TEST_DB_ENGINE=pgsql
-  - LARAVEL=6.18 TEST_DB_ENGINE=sqlite
-  - LARAVEL=6.18 TEST_DB_ENGINE=mysql
-  - LARAVEL=6.18 TEST_DB_ENGINE=pgsql
+  - LARAVEL=6.20 TEST_DB_ENGINE=sqlite
+  - LARAVEL=6.20 TEST_DB_ENGINE=mysql
+  - LARAVEL=6.20 TEST_DB_ENGINE=pgsql
   - LARAVEL=7.0 TEST_DB_ENGINE=sqlite
   - LARAVEL=7.0 TEST_DB_ENGINE=mysql
   - LARAVEL=7.0 TEST_DB_ENGINE=pgsql
-  - LARAVEL=7.28 TEST_DB_ENGINE=sqlite
-  - LARAVEL=7.28 TEST_DB_ENGINE=mysql
-  - LARAVEL=7.28 TEST_DB_ENGINE=pgsql
+  - LARAVEL=7.30 TEST_DB_ENGINE=sqlite
+  - LARAVEL=7.30 TEST_DB_ENGINE=mysql
+  - LARAVEL=7.30 TEST_DB_ENGINE=pgsql
   - LARAVEL=8.0 TEST_DB_ENGINE=sqlite
   - LARAVEL=8.0 TEST_DB_ENGINE=mysql
   - LARAVEL=8.0 TEST_DB_ENGINE=pgsql
-  - LARAVEL=8.1 TEST_DB_ENGINE=sqlite
-  - LARAVEL=8.1 TEST_DB_ENGINE=mysql
-  - LARAVEL=8.1 TEST_DB_ENGINE=pgsql
+  - LARAVEL=8.17 TEST_DB_ENGINE=sqlite
+  - LARAVEL=8.17 TEST_DB_ENGINE=mysql
+  - LARAVEL=8.17 TEST_DB_ENGINE=pgsql
 
 matrix:
   exclude:
-    - php: '7.2'
+    - php: '8.0'
+      env: 'LARAVEL=6.0 TEST_DB_ENGINE=sqlite'
+    - php: '8.0'
+      env: 'LARAVEL=6.0 TEST_DB_ENGINE=mysql'
+    - php: '8.0'
+      env: 'LARAVEL=6.0 TEST_DB_ENGINE=pgsql'
+    - php: '8.0'
+      env: 'LARAVEL=7.0 TEST_DB_ENGINE=sqlite'
+    - php: '8.0'
+      env: 'LARAVEL=7.0 TEST_DB_ENGINE=mysql'
+    - php: '8.0'
+      env: 'LARAVEL=7.0 TEST_DB_ENGINE=pgsql'
+    - php: '8.0'
       env: 'LARAVEL=8.0 TEST_DB_ENGINE=sqlite'
-    - php: '7.2'
+    - php: '8.0'
       env: 'LARAVEL=8.0 TEST_DB_ENGINE=mysql'
-    - php: '7.2'
+    - php: '8.0'
       env: 'LARAVEL=8.0 TEST_DB_ENGINE=pgsql'
-    - php: '7.2'
-      env: 'LARAVEL=8.1 TEST_DB_ENGINE=sqlite'
-    - php: '7.2'
-      env: 'LARAVEL=8.1 TEST_DB_ENGINE=mysql'
-    - php: '7.2'
-      env: 'LARAVEL=8.1 TEST_DB_ENGINE=pgsql'
+
 
 before_script:
   - echo 'memory_limit=-1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 script:
   - vendor/bin/phpunit --testdox
 before_install:
-  - MINOR=`echo $LARAVEL | sed 's/[5|6|7|8]\.\([0-9]\+\)/\1/'`
-  - '[[ $LARAVEL =~ ^6\.[0-9]+$ ]] && MAJOR=6 || MAJOR=5'
-  - '[[ $LARAVEL =~ ^7\.[0-9]+$ ]] && MAJOR=7 || true'
+  - MINOR=`echo $LARAVEL | sed 's/[6|7|8]\.\([0-9]\+\)/\1/'`
+  - '[[ $LARAVEL =~ ^7\.[0-9]+$ ]] && MAJOR=7 || MAJOR=6'
   - '[[ $LARAVEL =~ ^8\.[0-9]+$ ]] && MAJOR=8 || true'
   - echo "Testing against Laravel ${MAJOR}.${MINOR}"
   - composer require "illuminate/support:${MAJOR}.${MINOR}.*" --no-update -v
