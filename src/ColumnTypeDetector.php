@@ -48,9 +48,13 @@ class ColumnTypeDetector
     {
         // Trigger a notice to help folks finding the right path when shit hits the fan
         $this->notice(
-            sprintf("Could not detect type for the `%s.%s` relation.\nSet the %s config entry to either `%s` or `%s`.",
-                $table, $column, ConfigurationDetector::CONFIG_ROOT . " . $table . $column",
-                'int [unsigned]', 'bigint [unsigned]'
+            sprintf(
+                "Could not detect type for the `%s.%s` relation.\nSet the %s config entry to either `%s` or `%s`.",
+                $table,
+                $column,
+                ConfigurationDetector::CONFIG_ROOT . " . $table . $column",
+                'int [unsigned]',
+                'bigint [unsigned]'
             )
         );
 
