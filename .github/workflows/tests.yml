@@ -38,11 +38,11 @@ jobs:
         run: php vendor/bin/phpunit --testdox
         env:
           TEST_DB_ENGINE: ${{ matrix.dbengine }}
-  services:
-    mysql:
-      image: mysql:5.7
-      env:
-        MYSQL_ALLOW_EMPTY_PASSWORD: yes
-        MYSQL_DATABASE: migration_compat_test
-      ports:
-        - 3306
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: migration_compat_test
+        ports:
+          - 3306
