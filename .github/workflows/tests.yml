@@ -47,6 +47,7 @@ jobs:
         env:
           TEST_DB_ENGINE: pgsql
           TEST_DB_PORT: 5432
+          TEST_DB_HOST: postgres
           TEST_DB_PASSWORD: ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
     services:
       mysql:
