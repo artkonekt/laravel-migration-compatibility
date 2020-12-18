@@ -47,7 +47,7 @@ jobs:
         env:
           TEST_DB_ENGINE: pgsql
           TEST_DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          TEST_DB_PASSWORD: ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
+          TEST_DB_PASSWORD: postgres
     services:
       mysql:
         image: mysql:5.7
