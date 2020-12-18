@@ -46,7 +46,7 @@ jobs:
         run: php vendor/bin/phpunit --testdox
         env:
           TEST_DB_ENGINE: pgsql
-          TEST_DB_PORT: ${{ job.services.mysql.ports[5432] }}
+          TEST_DB_PORT: ${{ job.services.postgres.ports[5432] }}
           TEST_DB_PASSWORD: ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
     services:
       mysql:
