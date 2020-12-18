@@ -10,6 +10,7 @@ jobs:
       matrix:
         php: ['7.3', '7.4', '8.0']
         laravel: ['6.0', '6.20', '7.0', '7.30', '8.0', '8.19']
+        dbengine: ['sqlite', 'mysql']
         exclude:
           - php: '8.0'
             laravel: '6.0'
@@ -32,6 +33,18 @@ jobs:
       - name: Composer Install
         run: composer install --prefer-dist --no-progress --no-interaction
       - name: Create Database
-        run: mkdir -p database && touch database/database.sqlite
+        run: |
+          mkdir -p database && touch database/database.sqlite
+          TEST_DB_ENGINE="${{ matrix.dbengine }}"
+          echo "TEST_DB_ENGINE=`echo $TEST_DB_ENGINE`" >> $GITHUB_ENV
       - name: Run Tests
         run: php vendor/bin/phpunit --testdox
+
+services:
+  mysql:
+    image: mysql:5.7
+    env:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: migration_compat_test
+    ports:
+      - 3306
