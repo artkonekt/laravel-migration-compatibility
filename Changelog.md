@@ -3,6 +3,11 @@
 
 ## 1.x Series
 
+### Unreleased
+##### 2020-12-XX
+
+- Fixed SQLite detector data type string case mismatch (integer vs INTEGER)
+
 ### 1.4.0
 ##### 2020-12-07
 

@@ -32,7 +32,8 @@ class SqliteDetector implements FieldTypeDetector
 
         $meta   = collect($statement->fetchAll(PDO::FETCH_ASSOC))->keyBy('name');
         $colDef = $meta->get($column);
+        $type   = isset($colDef['type']) ? mb_strtolower($colDef['type']) : null;
 
-        return IntegerField::create($colDef['type'] ?? null);
+        return IntegerField::create($type);
     }
 }
