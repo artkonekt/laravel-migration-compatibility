@@ -33,18 +33,16 @@ jobs:
       - name: Composer Install
         run: composer install --prefer-dist --no-progress --no-interaction
       - name: Create Database
-        run: |
-          mkdir -p database && touch database/database.sqlite
-          TEST_DB_ENGINE="${{ matrix.dbengine }}"
-          echo "TEST_DB_ENGINE=`echo $TEST_DB_ENGINE`" >> $GITHUB_ENV
+        run: mkdir -p database && touch database/database.sqlite
       - name: Run Tests
         run: php vendor/bin/phpunit --testdox
-
-services:
-  mysql:
-    image: mysql:5.7
-    env:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
-      MYSQL_DATABASE: migration_compat_test
-    ports:
-      - 3306
+        env:
+          TEST_DB_ENGINE: ${{ matrix.dbengine }}
+  services:
+    mysql:
+      image: mysql:5.7
+      env:
+        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        MYSQL_DATABASE: migration_compat_test
+      ports:
+        - 3306
