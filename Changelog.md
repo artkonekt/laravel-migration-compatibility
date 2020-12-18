@@ -3,10 +3,11 @@
 
 ## 1.x Series
 
-### Unreleased
-##### 2020-12-XX
+### 1.4.1
+##### 2020-12-18
 
 - Fixed SQLite detector data type string case mismatch (integer vs INTEGER)
+- Changed CI from Travis to Github Actions 🥺
 
 ### 1.4.0
 ##### 2020-12-07
