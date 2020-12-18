@@ -38,7 +38,7 @@ jobs:
         run: php vendor/bin/phpunit --testdox
         env:
           TEST_DB_ENGINE: ${{ matrix.dbengine }}
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          TEST_DB_PORT: ${{ job.services.mysql.ports[3306] }}
     services:
       mysql:
         image: mysql:5.7
