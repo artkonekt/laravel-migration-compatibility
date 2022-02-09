@@ -3,6 +3,8 @@
     "description": "Library to help migrations to figure out whether a related field is int or bigInt",
     "type": "library",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "keywords": ["laravel", "migration", "database", "konekt", "artkonekt"],
     "support": {
         "source": "https://github.com/artkonekt/laravel-migration-compatibility"
