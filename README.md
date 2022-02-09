@@ -51,7 +51,7 @@ composer require konekt/laravel-migration-compatibility
 
 ## Documentation
 
-For detailed usage and examples go to the [Documentation](https://konekt.dev/laravel-migration-compatibility)
+For detailed usage and examples go to the [Documentation](https://konekt.dev/migration-compatibility)
 or refer to the markdown files in the `docs/` folder of this repo.
 
 For the list of changes read the [Changelog](Changelog.md).
