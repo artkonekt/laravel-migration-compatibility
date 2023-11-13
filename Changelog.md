@@ -7,6 +7,7 @@
 ##### 2023-XX-YY
 
 - Added PHP 8.3 support
+- Proven to work with MySQL 8.0 - 8.2
 
 ### 1.6.0
 ##### 2023-02-17
