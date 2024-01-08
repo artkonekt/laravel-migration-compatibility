@@ -19,7 +19,7 @@ This small change is a big
 [source of problems](https://laraveldaily.com/be-careful-laravel-5-8-added-bigincrements-as-defaults/)
 for **packages** that define references to the **default Laravel user table**.
 
-This package helps solving this problem by extending Laravel's `Blueprint` class by a method that
+This package helps to solve this problem by extending Laravel's `Blueprint` class by a method that
 can detect the actual referenced field type:
 
 ```php
