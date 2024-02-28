@@ -15,7 +15,7 @@ jobs:
           - php: '8.0'
             laravel: '10.0'
           - php: '8.0'
-            laravel: '10.39'
+            laravel: '10.46'
           - php: '8.0'
             laravel: '11.x'
           - php: '8.1'
