@@ -42,8 +42,10 @@ The library was tested with:
 
 ## Possible Problems
 
-Unfortunately Doctrine DBAL cannot be properly used for detecting the existing schema with Laravel,
+~~Unfortunately~~* Doctrine DBAL cannot be properly used for detecting the existing schema with Laravel,
 therefore this library is using PDO and raw engine specific queries to find out the real schema.
+
+> *: Update Feb 2024: as Laravel 11 got rid of Doctrine DBAL now we're happy that this package just keeps working with the PDO solution 😌
 
 As a consequence, it only works with the supported DB engines (see above).
 
