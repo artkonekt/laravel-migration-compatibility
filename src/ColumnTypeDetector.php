@@ -52,7 +52,7 @@ class ColumnTypeDetector
                 "Could not detect type for the `%s.%s` relation.\nSet the %s config entry to either `%s` or `%s`.",
                 $table,
                 $column,
-                ConfigurationDetector::CONFIG_ROOT . " . $table . $column",
+                ConfigurationDetector::CONFIG_ROOT . ".$table.$column",
                 'int [unsigned]',
                 'bigint [unsigned]'
             )
