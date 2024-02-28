@@ -7,6 +7,8 @@
 ##### 2024-01-08
 
 - Added Laravel 11 support
+- Dropped PHP 8.0 support
+- Dropped Laravel 9 support (EOL)
 
 ### 1.7.0
 ##### 2023-11-13
