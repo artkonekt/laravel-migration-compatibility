@@ -5,7 +5,13 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "keywords": ["laravel", "migration", "database", "konekt", "artkonekt"],
+    "keywords": [
+        "laravel",
+        "migration",
+        "database",
+        "konekt",
+        "artkonekt"
+    ],
     "support": {
         "source": "https://github.com/artkonekt/laravel-migration-compatibility"
     },
@@ -18,15 +24,17 @@
     "require": {
         "php": "^8.0",
         "ext-PDO": "*",
-        "illuminate/database": "^10.0|^11.0",
+        "illuminate/database": "^10.0|^11.0|^12.0",
         "konekt/enum": "^2.1 | ^3.0 | ^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "orchestra/testbench": "^8.0|^9.0"
+        "phpunit/phpunit": "^10.0|^11.5.3",
+        "orchestra/testbench": "^8.0|^9.0|^10.0"
     },
     "autoload": {
-        "psr-4": { "Konekt\\LaravelMigrationCompatibility\\": "src/" }
+        "psr-4": {
+            "Konekt\\LaravelMigrationCompatibility\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
