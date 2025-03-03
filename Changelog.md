@@ -3,6 +3,13 @@
 
 ## 1.x Series
 
+### Unreleased
+##### 2025-XX-YY
+
+- Added Laravel 12 support
+- Added PHP 8.4 support
+- Actually dropped PHP 8.0 support (even in composer.json)
+
 ### 1.9.0
 ##### 2024-02-28
 
