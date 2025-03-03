@@ -36,8 +36,8 @@ the field is signed or unsigned.
 
 The library was tested with:
 
-- PHP 7.1 - 8.3
-- Laravel 5.4 - 11.0
+- PHP 7.1 - 8.4
+- Laravel 5.4 - 12.0
 - Sqlite, MySQL (5.7, 8.0, 8.2) and Postgres (11 - 16).
 
 ## Possible Problems
