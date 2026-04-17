@@ -3,8 +3,8 @@
 
 ## 1.x Series
 
-### Unreleased
-##### 2026-XX-YY
+### 1.11.0
+##### 2026-04-17
 
 - Added Laravel 13 support
 - Added PHP 8.5 support
